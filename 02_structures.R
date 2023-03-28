@@ -135,3 +135,51 @@ named_list2 <- list(first_list = named_list,
 named_list2
 named_list2$some_vec[c(TRUE, FALSE)]
 named_list2$first_list$age
+
+matrix(rep(1:9, 9) * rep(1:9, each = 9), nrow = 9)
+# outer(1:9, 1:9, `*`)
+# 1:9 %o% 1:9
+
+list(name = c("Нил", "Гиви", "Ион", "Чук", "Парфирий"),
+     age = c(33, 3, 144, 150, 15),
+     student = c(TRUE, TRUE, TRUE, FALSE, TRUE))
+
+df <- data.frame(
+     name = c("Нил", "Гиви", "Ион", "Чук", "Парфирий"),
+     age = c(33, 3, 144, 150, 15),
+     student = c(TRUE, TRUE, TRUE, FALSE, TRUE))
+str(df)
+df
+
+df$name
+df$age
+df[2:3, 1:2]
+
+df$lovesR <- TRUE
+df[1:2, "student"]
+df[1:2, c("age", "name")]
+
+df$age[3:4]
+
+df[df$age > 100, ]
+df[df$age < mean(df$age), ]
+
+install.packages("beepr")
+library(beepr)
+beep()
+?beep
+beep(11)
+beep(3)
+#если проблемы с vctrs, lifecycle вылезают -- лучше переустановить R
+
+beepr::beep()
+beepr::beep(5)
+
+install.packages("BiocManager")
+BiocManager::install("DESeq2")
+library(DESeq2)
+
+install.packages("devtools")
+devtools::install_github("brooke-watson/BRRR")
+BRRR::skrrrahh(11)
+
