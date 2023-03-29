@@ -1,3 +1,7 @@
+
+# Условные конструкции ----------------------------------------------------
+
+
 n <- 1
 if (n > 0) {
   "Positive number"
@@ -23,7 +27,7 @@ if (n > 0) {
 } else {
   "0"
 }
-n
+
 ifelse(n > 0, "Positive number", "Negative number or 0")
 
 ifelse(n > 0,
@@ -39,6 +43,8 @@ dplyr::case_when(
   is.na(n) ~ NA,              #else if
   .default = "Zero"           #else
 )
+
+# Создание функций --------------------------------------------------------
 
 pow <- function(x, p) {
   power <- x ^ p
@@ -60,3 +66,18 @@ imt <- function(m, h) m / h ^ 2
 
 rm(m, h)
 imt(m = 100, h = 1.6)
+
+
+# Семейство apply() -------------------------------------------------------
+
+A <- matrix(1:12, nrow = 4)
+rowSums(A)
+rowMeans(A)
+colSums(A)
+colMeans(A)
+apply(A, 2, sum)
+apply(A, 1, min)
+A[2, 3] <- NA
+A
+apply(A, 2, mean)
+apply(A, 2, mean, na.rm = TRUE)
