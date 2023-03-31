@@ -81,3 +81,32 @@ A[2, 3] <- NA
 A
 apply(A, 2, mean)
 apply(A, 2, mean, na.rm = TRUE)
+
+apply(A, 1, function(x) sum((x - mean(x, na.rm= TRUE)) ^ 2) )
+
+some_list <- list(some_numbers = 1:10,
+                  some_letters = letters)
+lapply(some_list, length)
+sapply(some_list, length)
+
+unlist(lapply(some_list, length))
+
+sapply(1:10, sqrt)
+sqrt(1:10)
+
+is_prime <- function(x) sum(x %% seq_len(x) == 0) == 2
+is_prime(23)
+
+is_prime(1:10)
+is_prime_vectorized <- Vectorize(is_prime)
+
+which(sapply(1:100, is_prime))
+
+replicate(100, mean(rnorm(30)))
+
+#install.packages("purrr")
+library(purrr)
+
+map(some_list, length)
+map_chr(some_list, length)
+map(some_list, 2)

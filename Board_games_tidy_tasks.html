@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.208">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Анализ данных про настольные игры</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="Board_games_tidy_tasks_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Board_games_tidy_tasks_files/libs/quarto-html/quarto.js"></script>
+<script src="Board_games_tidy_tasks_files/libs/quarto-html/popper.min.js"></script>
+<script src="Board_games_tidy_tasks_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Board_games_tidy_tasks_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Board_games_tidy_tasks_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Board_games_tidy_tasks_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Board_games_tidy_tasks_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Board_games_tidy_tasks_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Board_games_tidy_tasks_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Анализ данных про настольные игры</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="введение" class="level2">
+<h2 class="anchored" data-anchor-id="введение">Введение</h2>
+<p>Перед вами два связанных набора данных <code>ratings</code> и <code>details</code>, которые содержат в себе информацию об огромном количестве <em>настольных игр</em>. Наборы данных взяты с проекта <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-01-25/readme.md">Tidy Tuesday</a> (в свою очередь, эти данные взяты с <a href="https://www.kaggle.com/datasets/jvanelteren/boardgamegeek-reviews?select=2022-01-08.csv">Kaggle</a>, где есть данные на 3 гигабайта со всеми обзорами на игры!), а собраны с сайта <a href="https://boardgamegeek.com">BoardGamesGeek</a>.</p>
+<p>Описание колонок <em>(codebook)</em> можно посмотреть на <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-01-25/readme.md">гитхабе проекта Tidy Tuesday</a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ratings <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-01-25/ratings.csv'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>details <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-01-25/details.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="исследуем-ratings" class="level2">
+<h2 class="anchored" data-anchor-id="исследуем-ratings">Исследуем <code>ratings</code></h2>
+<p>Давайте для начала немного исследуем датасет <code>ratings</code>.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ratings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21,831 × 10
+     num     id name            year  rank average bayes…¹ users…² url   thumb…³
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+ 1   105  30549 Pandemic        2008   106    7.59    7.49  108975 /boa… https:…
+ 2   189    822 Carcassonne     2000   190    7.42    7.31  108738 /boa… https:…
+ 3   428     13 Catan           1995   429    7.14    6.97  108024 /boa… https:…
+ 4    72  68448 7 Wonders       2010    73    7.74    7.63   89982 /boa… https:…
+ 5   103  36218 Dominion        2008   104    7.61    7.50   81561 /boa… https:…
+ 6   191   9209 Ticket to Ride  2004   192    7.41    7.30   76171 /boa… https:…
+ 7   100 178900 Codenames       2015   101    7.6     7.51   74419 /boa… https:…
+ 8     3 167791 Terraforming …  2016     4    8.42    8.27   74216 /boa… https:…
+ 9    15 173346 7 Wonders Duel  2015    16    8.11    7.98   69472 /boa… https:…
+10    35  31260 Agricola        2007    36    7.93    7.81   66093 /boa… https:…
+# … with 21,821 more rows, and abbreviated variable names ¹​bayes_average,
+#   ²​users_rated, ³​thumbnail</code></pre>
+</div>
+</div>
+<p>Выберем из <code>ratings</code> колонки <code>name</code>, <code>average</code>, <code>users_rated</code></p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ratings <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, average, users_rated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21,831 × 3
+   name              average users_rated
+   &lt;chr&gt;               &lt;dbl&gt;       &lt;dbl&gt;
+ 1 Pandemic             7.59      108975
+ 2 Carcassonne          7.42      108738
+ 3 Catan                7.14      108024
+ 4 7 Wonders            7.74       89982
+ 5 Dominion             7.61       81561
+ 6 Ticket to Ride       7.41       76171
+ 7 Codenames            7.6        74419
+ 8 Terraforming Mars    8.42       74216
+ 9 7 Wonders Duel       8.11       69472
+10 Agricola             7.93       66093
+# … with 21,821 more rows</code></pre>
+</div>
+</div>
+<p>Выберем из тиббла <code>ratings</code> 20, 500, 2000 и 20000ные строки:</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ratings <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">500</span>, <span class="dv">2000</span>, <span class="dv">20000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 10
+    num     id name            year  rank average bayes_…¹ users…² url   thumb…³
+  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+1    22 266192 Wingspan        2019    23    8.1      7.94   56079 /boa… https:…
+2  1150    826 Cartagena       2000  1151    6.69     6.45    7601 /boa… https:…
+3  2704     58 Kings &amp; Things  1986  2705    6.51     5.97    1629 /boa… https:…
+4 17650  13440 Horrific        2004 17651    5.8      5.50      36 /boa… https:…
+# … with abbreviated variable names ¹​bayes_average, ²​users_rated, ³​thumbnail</code></pre>
+</div>
+</div>
+<p>Отранжируем игры в <code>ratings</code> по названиям (в алфавитном порядке):</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ratings <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21,831 × 10
+     num     id name            year  rank average bayes…¹ users…² url   thumb…³
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+ 1 18328 122711 "\"La Garde r…  2011 18329    5.39    5.50      35 /boa… https:…
+ 2 17674  23304 "\"Oh My God!…  2014 17675    5.77    5.50      84 /boa… https:…
+ 3 10121   4016 "\"Scratch On…  1995 10122    7.42    5.55      52 /boa… https:…
+ 4 11197  38836 "\"Tarleton's…  2010 11198    7.06    5.54      50 /boa… https:…
+ 5 17013 286535 "#MyLife"       2019 17014    5.69    5.51      60 /boa… https:…
+ 6  5646 188325 "'65: Squad-L…  2016  5647    7.67    5.66     153 /boa… https:…
+ 7 20470   7463 "'CA' Tactica…  1973 20471    5.31    5.47     109 /boa… https:…
+ 8  6950   6253 "'Wacht am Rh…  1977  6951    7.43    5.61     131 /boa… https:…
+ 9 12277 258440 "(Come on) Le…  2018 12278    7.28    5.53      38 /boa… https:…
+10  8165 128568 "(Your Name H…  2012  8166    7.13    5.58     115 /boa… https:…
+# … with 21,821 more rows, and abbreviated variable names ¹​bayes_average,
+#   ²​users_rated, ³​thumbnail</code></pre>
+</div>
+</div>
+<p>Отранжируем игры в <code>ratings</code> от по средним оценкам (<code>average</code>): от лучших к худшим.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ratings <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21,831 × 10
+     num     id name            year  rank average bayes…¹ users…² url   thumb…³
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+ 1 13628 274471 Malhya: Lands…  2022 13629    9.57    5.53      41 /boa… https:…
+ 2 14432 275777 Erune           2021 14433    9.56    5.52      43 /boa… https:…
+ 3 17552 228370 TerroriXico     2018 17553    9.43    5.50      70 /boa… https:…
+ 4  7432 345976 System Gatewa…  2021  7433    9.4     5.6       47 /boa… https:…
+ 5 11478 322354 DEFCON 1        2022 11479    9.36    5.54      60 /boa… https:…
+ 6 13821 173514 Meeple Quest    2021 13822    9.31    5.52      45 /boa… https:…
+ 7  6961  85147 Wings of the …  2019  6962    9.29    5.61     101 /boa… https:…
+ 8 14646 281257 Aeolis          2020 14647    9.25    5.52      40 /boa… https:…
+ 9 16996 207203 War Titans: I…     0 16997    9.24    5.51      58 /boa… https:…
+10 14752 151070 Gladiatoris     2009 14753    9.23    5.52      31 /boa… https:…
+# … with 21,821 more rows, and abbreviated variable names ¹​bayes_average,
+#   ²​users_rated, ³​thumbnail</code></pre>
+</div>
+</div>
+<p>У нас получилось много малоизвестных игр, у которых мало оценок. Давайте отделим для дальнейшего анализа только <em>5% игр</em>, которые получили <em>больше всего оценок</em> (<code>users_rated</code>) и сохраним полученную таблицу в переменную <code>ratings_topgames</code>.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ratings_topgames <span class="ot">&lt;-</span> ratings <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> users_rated, <span class="at">prop =</span> .<span class="dv">05</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>ratings_topgames</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,091 × 10
+     num     id name            year  rank average bayes…¹ users…² url   thumb…³
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+ 1   105  30549 Pandemic        2008   106    7.59    7.49  108975 /boa… https:…
+ 2   189    822 Carcassonne     2000   190    7.42    7.31  108738 /boa… https:…
+ 3   428     13 Catan           1995   429    7.14    6.97  108024 /boa… https:…
+ 4    72  68448 7 Wonders       2010    73    7.74    7.63   89982 /boa… https:…
+ 5   103  36218 Dominion        2008   104    7.61    7.50   81561 /boa… https:…
+ 6   191   9209 Ticket to Ride  2004   192    7.41    7.30   76171 /boa… https:…
+ 7   100 178900 Codenames       2015   101    7.6     7.51   74419 /boa… https:…
+ 8     3 167791 Terraforming …  2016     4    8.42    8.27   74216 /boa… https:…
+ 9    15 173346 7 Wonders Duel  2015    16    8.11    7.98   69472 /boa… https:…
+10    35  31260 Agricola        2007    36    7.93    7.81   66093 /boa… https:…
+# … with 1,081 more rows, and abbreviated variable names ¹​bayes_average,
+#   ²​users_rated, ³​thumbnail</code></pre>
+</div>
+</div>
+<p>Теперь посмотрим на худшие игры в новом датасете <em>ratings_topgames</em>, отранжировав игры про средней оценке (<code>average</code>):</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ratings_topgames <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(average)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,091 × 10
+     num    id name             year  rank average bayes…¹ users…² url   thumb…³
+   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+ 1 21829 11901 Tic-Tac-Toe      1300 21830    2.7     3.58    3436 /boa… https:…
+ 2 21828  5432 Chutes and Lad…   200 21829    2.87    3.61    4035 /boa… https:…
+ 3 21827  5048 Candy Land       1949 21828    3.18    3.80    4238 /boa… https:…
+ 4 21824  1410 Trouble          1965 21825    3.81    4.30    3484 /boa… https:…
+ 5 21820  3737 Operation        1965 21821    4.12    4.51    3827 /boa… https:…
+ 6 21822  2921 The Game of Li…  1960 21823    4.31    4.31   11324 /boa… https:…
+ 7 21823  1406 Monopoly         1933 21824    4.37    4.30   30803 /boa… https:…
+ 8 21813  2136 Pachisi           400 21814    4.5     4.69    4768 /boa… https:…
+ 9 21816  2407 Sorry!           1929 21817    4.52    4.65    6165 /boa… https:…
+10 21807  5894 Twister          1966 21808    4.54    4.76    4230 /boa… https:…
+# … with 1,081 more rows, and abbreviated variable names ¹​bayes_average,
+#   ²​users_rated, ³​thumbnail</code></pre>
+</div>
+</div>
+<p>Верните в виде строкового вектора <em>10 худших игр</em> (по <code>average</code>) из <code>ratings_topgames</code>.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ratings_topgames <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(average) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Tic-Tac-Toe"        "Chutes and Ladders" "Candy Land"        
+ [4] "Trouble"            "Operation"          "The Game of Life"  
+ [7] "Monopoly"           "Pachisi"            "Sorry!"            
+[10] "Twister"           </code></pre>
+</div>
+</div>
+<p>Теперь исследуем датасет <code>details</code> с дополнительными метаданными про настольные игры. Отранжируем игры в <code>details</code> по убыванию <code>minplaytime</code>, чтобы посмотреть самые долгие игры.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>details <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(minplaytime))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21,631 × 23
+     num     id primary  descr…¹ yearp…² minpl…³ maxpl…⁴ playi…⁵ minpl…⁶ maxpl…⁷
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1  9553   4815 The Cam… This i…    1979       8      10   60000   60000   60000
+ 2 10865  46669 1914: O… (from …    2013       2       4   17280   17280   17280
+ 3 13470   6942 Drang N… Introd…    1973       2       4   12000   12000   12000
+ 4 14448 239982 The Eni… We wan…    2017       1       4   10000    6000   10000
+ 5  4975   5651 The Lon… The Lo…    1979       2       8    5400    5400    5400
+ 6  6528  13532 Guderia… (from …    2001       1       6    4500    4500    4500
+ 7  5951   4102 Europa … &amp;quot;…    1993       1       6    3600    3600    3600
+ 8  6792  32989 Axis Em… From t…    2011       1       3    3600    3600    3600
+ 9  6332   8993 Fire in… Fire i…    1984       2       4    3000    3000    3000
+10  7517  22359 Steel W… (from …    2010       1       1    3000    3000    3000
+# … with 21,621 more rows, 13 more variables: minage &lt;dbl&gt;,
+#   boardgamecategory &lt;chr&gt;, boardgamemechanic &lt;chr&gt;, boardgamefamily &lt;chr&gt;,
+#   boardgameexpansion &lt;chr&gt;, boardgameimplementation &lt;chr&gt;,
+#   boardgamedesigner &lt;chr&gt;, boardgameartist &lt;chr&gt;, boardgamepublisher &lt;chr&gt;,
+#   owned &lt;dbl&gt;, trading &lt;dbl&gt;, wanting &lt;dbl&gt;, wishing &lt;dbl&gt;, and abbreviated
+#   variable names ¹​description, ²​yearpublished, ³​minplayers, ⁴​maxplayers,
+#   ⁵​playingtime, ⁶​minplaytime, ⁷​maxplaytime</code></pre>
+</div>
+</div>
+<p>Выкинем все игры, в которых минимальное время игры – 0 минут. Сохраним результаты в новый тибл <code>details_longplay</code>.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>details_longplay <span class="ot">&lt;-</span> details <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(minplaytime <span class="sc">!=</span> <span class="dv">0</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>details_longplay</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20,989 × 23
+     num     id primary  descr…¹ yearp…² minpl…³ maxpl…⁴ playi…⁵ minpl…⁶ maxpl…⁷
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1     0  30549 Pandemic In Pan…    2008       2       4      45      45      45
+ 2     1    822 Carcass… Carcas…    2000       2       5      45      30      45
+ 3     2     13 Catan    In CAT…    1995       3       4     120      60     120
+ 4     3  68448 7 Wonde… You ar…    2010       2       7      30      30      30
+ 5     4  36218 Dominion &amp;quot;…    2008       2       4      30      30      30
+ 6     5   9209 Ticket … With e…    2004       2       5      60      30      60
+ 7     6 178900 Codenam… Codena…    2015       2       8      15      15      15
+ 8     7 167791 Terrafo… In the…    2016       1       5     120     120     120
+ 9     8 173346 7 Wonde… In man…    2015       2       2      30      30      30
+10     9  31260 Agricola Descri…    2007       1       5     150      30     150
+# … with 20,979 more rows, 13 more variables: minage &lt;dbl&gt;,
+#   boardgamecategory &lt;chr&gt;, boardgamemechanic &lt;chr&gt;, boardgamefamily &lt;chr&gt;,
+#   boardgameexpansion &lt;chr&gt;, boardgameimplementation &lt;chr&gt;,
+#   boardgamedesigner &lt;chr&gt;, boardgameartist &lt;chr&gt;, boardgamepublisher &lt;chr&gt;,
+#   owned &lt;dbl&gt;, trading &lt;dbl&gt;, wanting &lt;dbl&gt;, wishing &lt;dbl&gt;, and abbreviated
+#   variable names ¹​description, ²​yearpublished, ³​minplayers, ⁴​maxplayers,
+#   ⁵​playingtime, ⁶​minplaytime, ⁷​maxplaytime</code></pre>
+</div>
+</div>
+<p>Создадим новую колонку <code>time_group</code> в <code>details_longplay</code>, в которую запишем:</p>
+<ul>
+<li><p><code>"short"</code> – если минимальное время игры меньше или равно 10 минутам;</p></li>
+<li><p><code>"middle"</code> – если минимальное время игры больше 10 минут, но меньше или равно 120 минутам;</p></li>
+<li><p><code>"long"</code> – если минимальное время игры больше 120 минут, но не больше суток;</p></li>
+<li><p><code>"extremely long"</code> – если минимальное время игры больше суток (о, господи).</p></li>
+</ul>
+<p>Новый датасет сохраните в переменную <code>details_longplay_time</code>.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>details_longplay_time <span class="ot">&lt;-</span> details_longplay <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time_group =</span> <span class="fu">case_when</span>(minplaytime <span class="sc">&lt;=</span> <span class="dv">10</span> <span class="sc">~</span> <span class="st">"short"</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>            minplaytime <span class="sc">&lt;=</span> <span class="dv">120</span> <span class="sc">~</span> <span class="st">"middle"</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>            minplaytime <span class="sc">&lt;=</span> <span class="dv">24</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">"long"</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.default =</span> <span class="st">"extremely long"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Посчитайте, сколько игр в каждой из получившихся категорий.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>details_longplay_time <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(time_group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  time_group         n
+  &lt;chr&gt;          &lt;int&gt;
+1 extremely long    19
+2 long            1655
+3 middle         17556
+4 short           1759</code></pre>
+</div>
+</div>
+</section>
+<section id="время-объединяться" class="level2">
+<h2 class="anchored" data-anchor-id="время-объединяться">Время объединяться!</h2>
+<p>Дополните набор данных <code>details_longplay_time</code> данными <code>ratings</code>. Проверьте, что количество строчек в <code>details_lonngplay_time</code> не изменилось (вам для этого нужно подобрать правильный *_<code>join</code>)! Объединить нужно по ключу <code>id</code>.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>details_longplay_time <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(ratings, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20,989 × 33
+   num.x     id primary  descr…¹ yearp…² minpl…³ maxpl…⁴ playi…⁵ minpl…⁶ maxpl…⁷
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1     0  30549 Pandemic In Pan…    2008       2       4      45      45      45
+ 2     1    822 Carcass… Carcas…    2000       2       5      45      30      45
+ 3     2     13 Catan    In CAT…    1995       3       4     120      60     120
+ 4     3  68448 7 Wonde… You ar…    2010       2       7      30      30      30
+ 5     4  36218 Dominion &amp;quot;…    2008       2       4      30      30      30
+ 6     5   9209 Ticket … With e…    2004       2       5      60      30      60
+ 7     6 178900 Codenam… Codena…    2015       2       8      15      15      15
+ 8     7 167791 Terrafo… In the…    2016       1       5     120     120     120
+ 9     8 173346 7 Wonde… In man…    2015       2       2      30      30      30
+10     9  31260 Agricola Descri…    2007       1       5     150      30     150
+# … with 20,979 more rows, 23 more variables: minage &lt;dbl&gt;,
+#   boardgamecategory &lt;chr&gt;, boardgamemechanic &lt;chr&gt;, boardgamefamily &lt;chr&gt;,
+#   boardgameexpansion &lt;chr&gt;, boardgameimplementation &lt;chr&gt;,
+#   boardgamedesigner &lt;chr&gt;, boardgameartist &lt;chr&gt;, boardgamepublisher &lt;chr&gt;,
+#   owned &lt;dbl&gt;, trading &lt;dbl&gt;, wanting &lt;dbl&gt;, wishing &lt;dbl&gt;, time_group &lt;chr&gt;,
+#   num.y &lt;dbl&gt;, name &lt;chr&gt;, year &lt;dbl&gt;, rank &lt;dbl&gt;, average &lt;dbl&gt;,
+#   bayes_average &lt;dbl&gt;, users_rated &lt;dbl&gt;, url &lt;chr&gt;, thumbnail &lt;chr&gt;, and …</code></pre>
+</div>
+</div>
+<p>Теперь посчитайте средние <code>average</code>, <code>users_rated</code> и <code>owned</code> для каждой группы по времени игры (колонка <code>time_group</code>, которую мы создавали ранее)</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>details_longplay_time <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(ratings, <span class="at">by =</span> <span class="st">"id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(time_group) <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rating =</span> <span class="fu">mean</span>(average, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">rated =</span> <span class="fu">mean</span>(users_rated, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">owned =</span> <span class="fu">mean</span>(owned, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  time_group     rating rated owned
+  &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 extremely long   7.50  220.  718.
+2 long             6.90  408.  857.
+3 middle           6.42  996. 1664.
+4 short            6.08  393.  781.</code></pre>
+</div>
+</div>
+<p>Теперь сделаем обратную задачу: возьмем тибл <code>ratings_topgames</code>, созданный ранее, и дополним его набором данных <code>details</code> (по ключу <code>id</code>).</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ratings_topgames <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(details, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,091 × 32
+   num.x     id name      year  rank average bayes…¹ users…² url   thumb…³ num.y
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
+ 1   105  30549 Pandemic  2008   106    7.59    7.49  108975 /boa… https:…     0
+ 2   189    822 Carcass…  2000   190    7.42    7.31  108738 /boa… https:…     1
+ 3   428     13 Catan     1995   429    7.14    6.97  108024 /boa… https:…     2
+ 4    72  68448 7 Wonde…  2010    73    7.74    7.63   89982 /boa… https:…     3
+ 5   103  36218 Dominion  2008   104    7.61    7.50   81561 /boa… https:…     4
+ 6   191   9209 Ticket …  2004   192    7.41    7.30   76171 /boa… https:…     5
+ 7   100 178900 Codenam…  2015   101    7.6     7.51   74419 /boa… https:…     6
+ 8     3 167791 Terrafo…  2016     4    8.42    8.27   74216 /boa… https:…     7
+ 9    15 173346 7 Wonde…  2015    16    8.11    7.98   69472 /boa… https:…     8
+10    35  31260 Agricola  2007    36    7.93    7.81   66093 /boa… https:…     9
+# … with 1,081 more rows, 21 more variables: primary &lt;chr&gt;, description &lt;chr&gt;,
+#   yearpublished &lt;dbl&gt;, minplayers &lt;dbl&gt;, maxplayers &lt;dbl&gt;, playingtime &lt;dbl&gt;,
+#   minplaytime &lt;dbl&gt;, maxplaytime &lt;dbl&gt;, minage &lt;dbl&gt;,
+#   boardgamecategory &lt;chr&gt;, boardgamemechanic &lt;chr&gt;, boardgamefamily &lt;chr&gt;,
+#   boardgameexpansion &lt;chr&gt;, boardgameimplementation &lt;chr&gt;,
+#   boardgamedesigner &lt;chr&gt;, boardgameartist &lt;chr&gt;, boardgamepublisher &lt;chr&gt;,
+#   owned &lt;dbl&gt;, trading &lt;dbl&gt;, wanting &lt;dbl&gt;, wishing &lt;dbl&gt;, and abbreviated …</code></pre>
+</div>
+</div>
+<p>В колонке <code>boardgamecategory</code> перечислено по несколько жанров для каждой категории. Нам нужно что-то с этим сделать, чтобы анализировать категории игр: сделайте длинный датафрейм, в каждой строчке которого будет уникальное сочетание игры и категории (соответственно, может быть несколько строчек для одной игры).</p>
+<p>Повторяющиеся сочетания (такие есть) необходимо удалить.</p>
+<p>Для этого, вам нужно для начала немного модифицировать колонку <code>boardgamecategory</code>, для начала удалив из нее символы <code>[</code>, <code>|</code>, <code>]</code>. Воспользуйтесь для этого пакетом <code>stringr</code>, а вот нужную функцию найдите самостоятельно! В качестве паттерна для удаления выбранных значений можете воспользоваться регулярным выражением <code>"\\[|'|\\]"</code>.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ratings_topgames <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(details, <span class="at">by =</span> <span class="st">"id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(name, <span class="at">boardgamecategory =</span> <span class="fu">str_remove_all</span>(boardgamecategory, <span class="st">"</span><span class="sc">\\</span><span class="st">[|'|</span><span class="sc">\\</span><span class="st">]"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(boardgamecategory, <span class="at">sep =</span> <span class="st">", "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3,396 × 2
+   name        boardgamecategory 
+   &lt;chr&gt;       &lt;chr&gt;             
+ 1 Pandemic    Medical           
+ 2 Carcassonne City Building     
+ 3 Carcassonne Medieval          
+ 4 Carcassonne Territory Building
+ 5 Catan       Economic          
+ 6 Catan       Negotiation       
+ 7 7 Wonders   Ancient           
+ 8 7 Wonders   Card Game         
+ 9 7 Wonders   City Building     
+10 7 Wonders   Civilization      
+# … with 3,386 more rows</code></pre>
+</div>
+</div>
+<p>Сделайте широкую табличку, где каждая строчка будет означать игру, а в колонках будут содержаться логичесие значения: <code>TRUE</code> – игра принадлежит категории, <code>FALSE</code> – игра не принадлежит категории.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>ratings_topgames <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(details, <span class="at">by =</span> <span class="st">"id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(name, <span class="at">boardgamecategory =</span> <span class="fu">str_remove_all</span>(boardgamecategory, <span class="st">"</span><span class="sc">\\</span><span class="st">[|'|</span><span class="sc">\\</span><span class="st">]"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(boardgamecategory, <span class="at">sep =</span> <span class="st">", "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">value =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> boardgamecategory, </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> value,</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_fill =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,085 × 82
+   name  Medical City …¹ Medie…² Terri…³ Econo…⁴ Negot…⁵ Ancient Card …⁶ Civil…⁷
+   &lt;chr&gt; &lt;lgl&gt;   &lt;lgl&gt;   &lt;lgl&gt;   &lt;lgl&gt;   &lt;lgl&gt;   &lt;lgl&gt;   &lt;lgl&gt;   &lt;lgl&gt;   &lt;lgl&gt;  
+ 1 Pand… TRUE    FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE  
+ 2 Carc… FALSE   TRUE    TRUE    TRUE    FALSE   FALSE   FALSE   FALSE   FALSE  
+ 3 Catan FALSE   FALSE   FALSE   FALSE   TRUE    TRUE    FALSE   FALSE   FALSE  
+ 4 7 Wo… FALSE   TRUE    FALSE   FALSE   TRUE    FALSE   TRUE    TRUE    TRUE   
+ 5 Domi… FALSE   FALSE   TRUE    FALSE   FALSE   FALSE   FALSE   TRUE    FALSE  
+ 6 Tick… FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE  
+ 7 Code… FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   TRUE    FALSE  
+ 8 Terr… FALSE   FALSE   FALSE   TRUE    TRUE    FALSE   FALSE   FALSE   FALSE  
+ 9 7 Wo… FALSE   TRUE    FALSE   FALSE   TRUE    FALSE   TRUE    TRUE    TRUE   
+10 Agri… FALSE   FALSE   FALSE   FALSE   TRUE    FALSE   FALSE   FALSE   FALSE  
+# … with 1,075 more rows, 72 more variables: Trains &lt;lgl&gt;, Deduction &lt;lgl&gt;,
+#   `Party Game` &lt;lgl&gt;, `Spies/Secret Agents` &lt;lgl&gt;, `Word Game` &lt;lgl&gt;,
+#   Environmental &lt;lgl&gt;, `Industry / Manufacturing` &lt;lgl&gt;,
+#   `Science Fiction` &lt;lgl&gt;, `Space Exploration` &lt;lgl&gt;, Animals &lt;lgl&gt;,
+#   Farming &lt;lgl&gt;, Renaissance &lt;lgl&gt;, Fighting &lt;lgl&gt;, Miniatures &lt;lgl&gt;,
+#   Fantasy &lt;lgl&gt;, `Abstract Strategy` &lt;lgl&gt;, Puzzle &lt;lgl&gt;, Dice &lt;lgl&gt;,
+#   `Movies / TV / Radio theme` &lt;lgl&gt;, Educational &lt;lgl&gt;, Humor &lt;lgl&gt;, …</code></pre>
+</div>
+</div>
+<p>Посчитайте, сколько игры в каждой категории, составьте топ от наиболее крупных категорий, до самых мелких.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>ratings_topgames <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(details, <span class="at">by =</span> <span class="st">"id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">boardgamecategory =</span> <span class="fu">str_remove_all</span>(boardgamecategory, <span class="st">"</span><span class="sc">\\</span><span class="st">[|'|</span><span class="sc">\\</span><span class="st">]"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(boardgamecategory, <span class="at">sep =</span> <span class="st">", "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(boardgamecategory, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 81 × 2
+   boardgamecategory     n
+   &lt;chr&gt;             &lt;int&gt;
+ 1 Card Game           324
+ 2 Fantasy             208
+ 3 Economic            177
+ 4 Fighting            162
+ 5 Science Fiction     125
+ 6 Adventure           111
+ 7 Medieval            101
+ 8 Exploration          99
+ 9 City Building        92
+10 Bluffing             91
+# … with 71 more rows</code></pre>
+</div>
+</div>
+<p>Теперь посчитайте не только количество игр по категории, но и их среднюю оценку, а также самую высокооцененную игру.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>ratings_topgames <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(details, <span class="at">by =</span> <span class="st">"id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">boardgamecategory =</span> <span class="fu">str_remove_all</span>(boardgamecategory, <span class="st">"</span><span class="sc">\\</span><span class="st">[|'|</span><span class="sc">\\</span><span class="st">]"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(boardgamecategory, <span class="at">sep =</span> <span class="st">", "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(boardgamecategory) <span class="sc">%&gt;%</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_average =</span> <span class="fu">mean</span>(average),</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">highest_score_game =</span> <span class="fu">first</span>(name)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 81 × 4
+   boardgamecategory     n mean_average highest_score_game                      
+   &lt;chr&gt;             &lt;int&gt;        &lt;dbl&gt; &lt;chr&gt;                                   
+ 1 Card Game           324         7.03 Through the Ages: A New Story of Civili…
+ 2 Fantasy             208         7.27 Gloomhaven                              
+ 3 Economic            177         7.48 Twilight Imperium: Fourth Edition       
+ 4 Fighting            162         7.27 Gloomhaven                              
+ 5 Science Fiction     125         7.42 Twilight Imperium: Fourth Edition       
+ 6 Adventure           111         7.39 Gloomhaven                              
+ 7 Medieval            101         7.29 Tainted Grail: The Fall of Avalon       
+ 8 Exploration          99         7.31 Gloomhaven                              
+ 9 City Building        92         7.32 On Mars                                 
+10 Bluffing             91         7.00 Dune                                    
+# … with 71 more rows</code></pre>
+</div>
+</div>
+<p>Наконец, посчитайте минимальное значение (<code>min()</code>), медиану (<code>median()</code>), среднее (<code>mean()</code>) и максимальное значение (<code>max()</code>) для каждой числовой колонки и для каждой категории игр.</p>
+<div class="cell">
+<details>
+<summary>Подсмотреть код (но лучше решите сами!)</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>ratings_topgames <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(details, <span class="at">by =</span> <span class="st">"id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">boardgamecategory =</span> <span class="fu">str_remove_all</span>(boardgamecategory, <span class="st">"</span><span class="sc">\\</span><span class="st">[|'|</span><span class="sc">\\</span><span class="st">]"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(boardgamecategory, <span class="at">sep =</span> <span class="st">", "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(boardgamecategory) <span class="sc">%&gt;%</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="fu">list</span>(<span class="at">min =</span> min,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">median =</span> median, </span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">mean =</span> mean, </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">max =</span> max)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 81 × 82
+   boardga…¹     n num.x…² num.x…³ num.x…⁴ num.x…⁵ id_min id_me…⁶ id_mean id_max
+   &lt;chr&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+ 1 "\"Child…    36     406   1806    8702.   21829    150  17191   57395. 226320
+ 2 "Abstrac…    69      57    849    2666.   21829      3   7854   83793. 300877
+ 3 "Action …    32      62    973    2656.   21820    150  98066   91753. 233020
+ 4 "Adventu…   111       0    434     659.    5691    699 127398  123460. 312484
+ 5 "Age of …     9      10    384     428.     816   9217  79828   93968. 244711
+ 6 "America…     2     442    696     696      950    551  60028.  60028. 119506
+ 7 "America…     2     384    396.    396.     409  79828 104412  104412  128996
+ 8 "America…     1     409    409     409      409 128996 128996  128996  128996
+ 9 "America…    15      11    769     758.    1575    878 143741  112098. 232405
+10 "Ancient"    60      15    452.    576.    2011     12  56710. 101384. 312484
+# … with 71 more rows, 72 more variables: year_min &lt;dbl&gt;, year_median &lt;dbl&gt;,
+#   year_mean &lt;dbl&gt;, year_max &lt;dbl&gt;, rank_min &lt;dbl&gt;, rank_median &lt;dbl&gt;,
+#   rank_mean &lt;dbl&gt;, rank_max &lt;dbl&gt;, average_min &lt;dbl&gt;, average_median &lt;dbl&gt;,
+#   average_mean &lt;dbl&gt;, average_max &lt;dbl&gt;, bayes_average_min &lt;dbl&gt;,
+#   bayes_average_median &lt;dbl&gt;, bayes_average_mean &lt;dbl&gt;,
+#   bayes_average_max &lt;dbl&gt;, users_rated_min &lt;dbl&gt;, users_rated_median &lt;dbl&gt;,
+#   users_rated_mean &lt;dbl&gt;, users_rated_max &lt;dbl&gt;, num.y_min &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
