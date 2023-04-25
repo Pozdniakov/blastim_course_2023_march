@@ -119,9 +119,10 @@ ggplot(data = heroes) +
   geom_bar(aes(x = Gender, fill = Gender)) +
   scale_fill_brewer(palette = "Set1")
 
-ggplot() +
-  geom_point(data = heroes %>% mutate(imt = Weight/(Height/100)^2),
-             aes(x = Height,
+heroes %>%
+  drop_na(Alignment, Gender) %>%
+  ggplot() +
+  geom_point(aes(x = Height,
                  y = Weight,
                  size = Weight,
                  colour = Weight),
@@ -131,4 +132,43 @@ ggplot() +
   #scale_y_log10() +
   scale_size_area(max_size = 4.5) +
   scale_colour_viridis_c() +
-  facet_wrap(~Gender)
+  facet_wrap(Alignment ~ Gender, ncol = 3) +
+  theme_linedraw()
+
+ggplot(data = heroes %>% drop_na(Gender)) +
+  geom_bar(aes(x = Gender, fill = Gender)) +
+  scale_fill_brewer(palette = "Set1") +
+  labs(title = "Распределение супергероев по полу",
+       subtitle = "Мужчин супергероев больше чем женщин",
+       x = "Пол супергероев",
+       y = "Количество",
+       fill = "Пол супергероев") +
+  guides(fill = "none") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+install.packages("hrbrthemes")
+
+ggplot(data = heroes %>% drop_na(Gender)) +
+  geom_bar(aes(x = Gender, fill = Gender)) +
+  scale_fill_brewer(palette = "Set1") +
+  labs(title = "Распределение супергероев по полу",
+       subtitle = "Мужчин супергероев больше чем женщин",
+       x = "Пол супергероев",
+       y = "Количество",
+       fill = "Пол супергероев") +
+  guides(fill = "none") +
+  hrbrthemes::theme_ipsum()
+
+ggplot(data = skin_colours,
+       aes(y = n,
+           yend = 0,
+           x = `Skin color`,
+           xend = `Skin color`)) +
+  #geom_line(group = 1, colour = "#DDBB50", size = 2) +
+  geom_segment(size = 3, colour = "orange") +
+  geom_point(shape = "♥", size = 7, colour = "#DD22AA") +
+  labs(title = "Skin colors of superheroes",
+       y = "number of superheroes") +
+  hrbrthemes::theme_ft_rc()
