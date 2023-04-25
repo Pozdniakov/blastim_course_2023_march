@@ -62,7 +62,8 @@ skimr::skim(heroes)
 
 eyes <- c("green", "green", "blue", "brown", "blue", "blue")
 eyes_factor <- as.factor(eyes)
-
+as.numeric(eyes_factor)
+as.character(eyes_factor)
 str(eyes_factor)
 fct_infreq(eyes)
 
@@ -85,3 +86,49 @@ ggplot(data = skin_colours,
   geom_point(shape = "♥", size = 7, colour = "#DD22AA") +
   coord_flip()
 
+ggplot(data = skin_colours,
+       aes(y = n,
+           yend = 0,
+           x = `Skin color`,
+           xend = `Skin color`)) +
+  #geom_line(group = 1, colour = "#DDBB50", size = 2) +
+  geom_segment(size = 3, colour = "orange") +
+  geom_point(shape = "♥", size = 7, colour = "#DD22AA") +
+  coord_polar(theta = "y")
+
+ggplot(data = skin_colours) +
+  geom_col(aes(y = n, x = "", fill = `Skin color`)) +
+  coord_polar(theta = "y")
+
+ggplot(data = skin_colours) +
+  geom_col(aes(y = n, x = `Skin color`, fill = `Skin color`)) +
+  coord_polar(theta = "x")
+
+ggplot(data = skin_colours %>%
+         filter(!`Skin color` %in% c("Other", "silver"))) +
+  geom_col(aes(y = n, x = `Skin color`, fill = `Skin color`)) +
+  scale_fill_brewer(palette = "Set1")
+
+ggplot(data = skin_colours %>%
+         filter(!`Skin color` %in% c("Other", "silver"))) +
+  geom_col(aes(y = n, x = `Skin color`, fill = `Skin color`)) +
+  scale_fill_identity()
+
+
+ggplot(data = heroes) +
+  geom_bar(aes(x = Gender, fill = Gender)) +
+  scale_fill_brewer(palette = "Set1")
+
+ggplot() +
+  geom_point(data = heroes %>% mutate(imt = Weight/(Height/100)^2),
+             aes(x = Height,
+                 y = Weight,
+                 size = Weight,
+                 colour = Weight),
+             alpha = .7,
+             shape = "♥") +
+  scale_x_log10() +
+  #scale_y_log10() +
+  scale_size_area(max_size = 4.5) +
+  scale_colour_viridis_c() +
+  facet_wrap(~Gender)
