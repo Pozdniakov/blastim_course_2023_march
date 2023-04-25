@@ -60,14 +60,28 @@ ggplot(data = heroes,
 
 skimr::skim(heroes)
 
+eyes <- c("green", "green", "blue", "brown", "blue", "blue")
+eyes_factor <- as.factor(eyes)
+
+str(eyes_factor)
+fct_infreq(eyes)
+
 skin_colours <- heroes %>%
+  mutate(`Skin color` =
+           `Skin color` %>%
+           fct_infreq() %>%
+           fct_lump_n(n = 7) %>%
+           fct_rev()) %>%
   count(`Skin color`, sort = TRUE) %>%
   drop_na()
+
 
 ggplot(data = skin_colours,
        aes(y = n,
            yend = 0,
            x = `Skin color`,
            xend = `Skin color`)) +
-  geom_segment() +
-  geom_point(shape = "♥", size = 3)
+  geom_segment(size = 3, colour = "orange") +
+  geom_point(shape = "♥", size = 7, colour = "#DD22AA") +
+  coord_flip()
+
