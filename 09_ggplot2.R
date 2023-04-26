@@ -161,7 +161,7 @@ ggplot(data = heroes %>% drop_na(Gender)) +
   guides(fill = "none") +
   hrbrthemes::theme_ipsum()
 
-ggplot(data = skin_colours,
+heroes_gg <- ggplot(data = skin_colours,
        aes(y = n,
            yend = 0,
            x = `Skin color`,
@@ -172,3 +172,7 @@ ggplot(data = skin_colours,
   labs(title = "Skin colors of superheroes",
        y = "number of superheroes") +
   hrbrthemes::theme_ft_rc()
+
+install.packages("plotly")
+library(plotly)
+ggplotly(heroes_gg)
