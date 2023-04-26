@@ -52,3 +52,30 @@ z <- (mean(samp) - 100)/(15/sqrt(length(samp)))
 
 1 - pnorm(z)
 (1 - pnorm(z)) * 2
+
+t <- (mean(samp) - 100)/(sd(samp)/sqrt(length(samp)))
+
+(1 - pt(t, df = length(samp) - 1)) * 2
+
+t.test(samp, mu = 100, alternative = "greater")
+
+t_samp <- t.test(samp, mu = 100)
+str(t_samp)
+t_samp$p.value
+
+install.packages("apa")
+library(apa)
+apa::t_apa(t_samp, format = "docx")
+
+library(tidyverse)
+diet <- readr::read_csv("https://raw.githubusercontent.com/Pozdniakov/tidy_stats/master/data/stcp-Rdataset-Diet.csv")
+
+diet1 <- diet %>%
+  filter(Diet == 1)
+
+options(scipen = 999)
+t.test(diet1$pre.weight, diet1$weight6weeks, paired = TRUE)
+
+diet2 <- diet %>%
+  filter(Diet == 2)
+t.test(diet2$pre.weight, diet2$weight6weeks, paired = TRUE)
