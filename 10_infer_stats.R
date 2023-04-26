@@ -79,3 +79,59 @@ t.test(diet1$pre.weight, diet1$weight6weeks, paired = TRUE)
 diet2 <- diet %>%
   filter(Diet == 2)
 t.test(diet2$pre.weight, diet2$weight6weeks, paired = TRUE)
+#t.test(diet2$pre.weight, diet2$weight6weeks, paired = FALSE)
+
+diet12 <- diet %>%
+  filter(Diet %in% 1:2)
+
+t.test(diet12$weight6weeks ~ diet12$Diet,
+       paired = FALSE, var.equal = TRUE)
+
+diet %>%
+  group_by(Diet) %>%
+  summarise(m = mean(weight6weeks),
+            sd = sd(weight6weeks))
+
+t.test(weight6weeks ~ Diet, data = diet12,
+       paired = FALSE, var.equal = TRUE)
+
+diet1after <- diet %>%
+  filter(Diet == 1) %>%
+  pull(weight6weeks)
+
+diet2after <- diet %>%
+  filter(Diet == 2) %>%
+  pull(weight6weeks)
+
+t.test(diet1after, diet2after, paired = FALSE, var.equal = TRUE)
+
+diet %>%
+  filter(Diet %in% 1:2) %>%
+  select(weight6weeks, Diet) %>% View()
+
+shapiro.test(samp)
+
+shapiro.test(diet1after)
+shapiro.test(diet2after)
+
+qqnorm(diet1after)
+qqnorm(diet2after)
+qqnorm(samp)
+
+hist(diet1after)
+hist(diet2after)
+hist(rnorm(25))
+
+car::qqPlot(rnorm(25))
+
+wilcox.test(diet1$pre.weight, diet1$weight6weeks, paired = TRUE)
+
+t.test(diet1after, diet2after, paired = FALSE, var.equal = TRUE)
+wilcox.test(diet1after, diet2after, paired = FALSE)
+
+a <- 1:4 + rnorm(4, sd = .2)
+b <- 100:103 + rnorm(4, sd = .2)
+t.test(a, b, paired = TRUE)
+wilcox.test(a, b, paired = TRUE)
+wilcox.test(a, b, paired = FALSE)
+t.test(a, b, paired = FALSE, var.equal = TRUE)
