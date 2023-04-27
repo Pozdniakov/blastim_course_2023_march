@@ -80,3 +80,65 @@ corrplot(corr = mtcars_cor_p$r,
          p.mat = mtcars_cor_p$p,
          method = "color",
          order = "hclust")
+
+class(Y ~ x)
+
+simple_model <- lm(backpack_kg ~ body_kg, data = back)
+simple_model
+str(simple_model)
+
+simple_model$coefficients[1]
+ggplot(data = back,
+       aes(x = body_kg, y = backpack_kg)) +
+  geom_point(alpha = .4) +
+  geom_abline(slope = simple_model$coefficients[2],
+              intercept = simple_model$coefficients[1])
+
+predict(simple_model,
+        newdata = data.frame(body_kg = 100))
+
+predict(simple_model,
+        newdata = data.frame(body_kg = 1000))
+
+predict(simple_model,
+        newdata = data.frame(body_kg = 0))
+
+summary(simple_model)
+
+model_without_intercept <-
+  lm(backpack_kg ~ 0 + body_kg, data = back)
+
+summary(model_without_intercept)
+
+ggplot(data = back,
+       aes(x = body_kg, y = backpack_kg)) +
+  geom_point(alpha = .4) +
+  geom_abline(slope = model_without_intercept$coefficients[1],
+              intercept = 0)
+
+plot(simple_model)
+
+model_mult <- lm(backpack_kg ~ body_kg +
+                   is_female + Units + BackProblems, data = back)
+
+model_mult
+summary(model_mult)
+model_mult_2 <- lm(backpack_kg ~ body_kg +
+                   Units + is_female, data = back)
+summary(model_mult_2)
+
+car::vif(model_mult_2)
+
+back %>%
+  select(body_kg, Units, BackProblems, is_female) %>%
+  cor()
+
+model_mult_crazy <- lm(backpack_kg ~
+                         body_kg +
+                         BodyWeight +
+                         Units +
+                         is_female,
+                       data = back %>% mutate(BodyWeight = BodyWeight + rnorm(nrow(back), sd = 10)))
+
+summary(model_mult_crazy)
+car::vif(model_mult_crazy)
