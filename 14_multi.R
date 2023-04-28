@@ -5,6 +5,9 @@ heroes <- read_csv("https://raw.githubusercontent.com/Pozdniakov/tidy_stats/mast
 
 # GLM ---------------------------------------------------------------------
 
+heroes <- heroes %>%
+  drop_na(good, Weight, Gender)
+
 heroes$good <- heroes$Alignment == "good"
 heroes_good_glm <- glm(good ~ Weight + Gender, heroes, family = binomial())
 summary(heroes_good_glm)
@@ -12,6 +15,9 @@ summary(heroes_good_glm)
 heroes_good_glm_noweight <- glm(good ~ Gender, heroes, family = binomial())
 summary(heroes_good_glm_noweight)
 
+heroes$predicted_good <- predict(heroes_good_glm, type = "response") > .5
+table(ifelse(heroes$predicted_good, "pred: good", "pred: bad"),
+      ifelse(heroes$good, "good", "bad"))
 
 # LME ---------------------------------------------------------------------
 
@@ -20,6 +26,8 @@ install.packages("lme4")
 library(lme4)
 
 data("sleepstudy")
+
+sleepstudy
 
 sleepstudy %>%
   ggplot(aes(x = Days, y = Reaction)) +
@@ -31,6 +39,12 @@ sleepstudy %>%
 
 sleep_lme0 <- lmer(Reaction ~ Days + (1 | Subject), sleepstudy)
 sleep_lme1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+
+install.packages("lmerTest")
+library(lmerTest)
+sleep_lme0 <- lmer(Reaction ~ Days + (1 | Subject), sleepstudy)
+sleep_lme1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+summary(sleep_lme1)
 
 sleepstudy$predicted_by_sleep_lme0 <- predict(sleep_lme0)
 sleepstudy$predicted_by_sleep_lme1 <- predict(sleep_lme1)
@@ -61,6 +75,7 @@ iris_3means <- kmeans(iris[,-5], centers = 3)
 iris$cluster <- iris_3means$cluster
 
 table(iris$Species, iris$cluster)
+plot(iris[, -5], col=iris$cluster)
 
 # Задание: сделать k-means (k = 3) кластерный анализ для пингвинов
 # Переменные:
@@ -84,8 +99,10 @@ iris_pr <- iris %>%
   select(!Species) %>%
   prcomp(center = TRUE, scale. = TRUE)
 
+iris_pr
 class(iris_pr)
 str(iris_pr)
+summary(iris_pr)
 
 plot(iris_pr$x[, 1:2], col = iris$Species)
 
